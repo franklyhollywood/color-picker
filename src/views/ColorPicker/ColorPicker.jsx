@@ -1,32 +1,13 @@
-import { useEffect } from 'react';
 import Display from '../../components/Display/Display';
 import useAffirmation from '../../hooks/useAffirmation.js';
 import useColorPicker from '../../hooks/useColorPicker.js';
 import styles from './ColorPicker.css';
 
 export default function ColorPicker() {
-  const {
-    handleColorChange,
-    setDidChangeColor,
-    didChangeColor,
-    fgColor,
-    bgColor,
-  } = useColorPicker();
+  const { content, handleChange, didChangeColor, fgColor, bgColor } =
+    useColorPicker();
 
-  const { setAffirmation, setContent, affirmation, content } = useAffirmation();
-
-  useEffect(() => {
-    const affirmations = [
-      'Great choice!',
-      'I love that color!',
-      'Looks good!',
-      'What a great color combo!',
-      'Ooh la la, so fancy',
-    ];
-
-    const randomIndex = Math.floor(Math.random() * affirmations.length);
-    setAffirmation(affirmations[randomIndex]);
-  }, [bgColor, fgColor]);
+  const { affirmation } = useAffirmation({ bgColor, fgColor });
 
   return (
     <>
@@ -41,24 +22,21 @@ export default function ColorPicker() {
           name="fgColor"
           aria-label="foreground color"
           value={fgColor}
-          onChange={handleColorChange}
+          onChange={handleChange}
         />
         <input
           type="color"
           name="bgColor"
           aria-label="background color"
           value={bgColor}
-          onChange={handleColorChange}
+          onChange={handleChange}
         />
         <input
           type="text"
           name="content"
           aria-label="content"
           value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-            setDidChangeColor(false);
-          }}
+          onChange={handleChange}
         />
       </fieldset>
       <Display content={content} bgColor={bgColor} fgColor={fgColor} />

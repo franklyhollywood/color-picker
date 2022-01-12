@@ -4,8 +4,9 @@ export default function useColorPicker() {
   const [fgColor, setFgColor] = useState('#ffcc00');
   const [bgColor, setBgColor] = useState('#212121');
   const [didChangeColor, setDidChangeColor] = useState(false);
+  const [content, setContent] = useState('Hello, world!');
 
-  const handleColorChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
       case 'fgColor':
@@ -16,15 +17,19 @@ export default function useColorPicker() {
         setBgColor(value);
         setDidChangeColor(true);
         break;
+      case 'content':
+        setDidChangeColor(false);
+        setContent(value);
+        break;
       default:
         break;
     }
   };
   return {
-    handleColorChange,
-    setDidChangeColor,
+    handleChange,
     didChangeColor,
     fgColor,
     bgColor,
+    content,
   };
 }

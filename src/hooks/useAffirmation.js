@@ -1,8 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function useAffirmation() {
-  const [content, setContent] = useState('Hello, world!');
+export default function useAffirmation({ bgColor, fgColor }) {
   const [affirmation, setAffirmation] = useState('');
 
-  return { setAffirmation, setContent, affirmation, content };
+  useEffect(() => {
+    const affirmations = [
+      'Great choice!',
+      'I love that color!',
+      'Looks good!',
+      'What a great color combo!',
+      'Ooh la la, so fancy',
+    ];
+
+    const randomIndex = Math.floor(Math.random() * affirmations.length);
+    setAffirmation(affirmations[randomIndex]);
+  }, [bgColor, fgColor]);
+
+  return { affirmation };
 }
